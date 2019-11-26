@@ -1,0 +1,12 @@
+*.class
+*.obj
+
+*.jar
+*.war
+*.exe
+*.lib
+*.tar
+*.rar
+*.gz
+*.doc
+*.docx
