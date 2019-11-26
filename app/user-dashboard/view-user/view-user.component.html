@@ -1,0 +1,40 @@
+
+<div class="panel panel-primary">
+    <div class="panel panel-heading">
+        <h3 class="panel-title">Search :</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="container">
+            <span style="width:20%">Search User:  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Enter FirstName or LastName" /></span>
+            <br>
+            <span><button class="btn btn-primary" (click)="getAllUsers('firstName')">First Name</button> </span> &nbsp;
+            <span><button class="btn btn-primary" (click)="getAllUsers('lastName')">Last Name</button> </span>  &nbsp;
+            <span><button class="btn btn-primary" (click)="getAllUsers('employeeId')">Employee Id</button> </span>
+        </div>
+    </div>
+
+    <div class="panel-body">
+    <table  class="table table-striped">
+        <thead></thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Employee Id</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+
+        <tbody>
+            <tr *ngFor="let user of allUsers | filter:searchText">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.employeeId}}</td>
+                <td><button class="btn btn-primary" (click)="editUser(user.userId)"> Edit</button></td>
+                <td><button class="btn btn-primary" (click)="deleteUser(user.userId)"> Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
