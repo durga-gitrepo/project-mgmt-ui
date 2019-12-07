@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from './app.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { AddUserComponent } from './user-dashboard/add-user/add-user.component';
-import { ViewUserComponent } from './user-dashboard/view-user/view-user.component';
+import { ProjectDashboardComponent} from './project-dashboard/project-dashboard.component';
 
 const routes: Routes = [
   {
@@ -14,6 +13,14 @@ const routes: Routes = [
  {
     path: 'userDashboard/editUser/:userId',
     component: UserDashboardComponent
+  },
+  {
+    path: 'projectDashboard',
+    component: ProjectDashboardComponent
+ },
+ {
+    path: 'projectDashboard/editProject/:projectId',
+    component: ProjectDashboardComponent
   }
 ];
 

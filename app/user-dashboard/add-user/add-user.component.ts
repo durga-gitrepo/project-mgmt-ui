@@ -46,12 +46,11 @@ export class AddUserComponent implements OnInit {
     
       if(this.editeduserId != null && this.editeduserId > 0)
       {
-        var userIdForEdit = this.editeduserId;
+        var userIdForEdit = this.editeduserId+'';
         this.getUserById(this.editeduserId)
         this.action = 'edit'
         document.getElementById('addEditUserBtn').innerHTML = 'Edit User';
         document.getElementById('userId').setAttribute('value', userIdForEdit);   
-        //document.getElementById('formKey').style.display = 'Show';
       }
       else{
         document.getElementById('addEditUserBtn').innerHTML = 'Add User';

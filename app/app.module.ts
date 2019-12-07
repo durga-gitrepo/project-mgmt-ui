@@ -9,9 +9,13 @@ import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { AddUserComponent } from './user-dashboard/add-user/add-user.component';
 import { ViewUserComponent } from './user-dashboard/view-user/view-user.component';
+import { ProjectDashboardComponent } from './project-dashboard/project-dashboard.component';
+import { ViewProjectComponent } from './project-dashboard/view-project/view-project.component';
+import { AddProjectComponent } from './project-dashboard/add-project/add-project.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,10 @@ import { ViewUserComponent } from './user-dashboard/view-user/view-user.componen
     NavbarComponent,
     UserDashboardComponent,
     AddUserComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    ProjectDashboardComponent,
+    ViewProjectComponent,
+    AddProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,7 @@ import { ViewUserComponent } from './user-dashboard/view-user/view-user.componen
     DataTableModule.forRoot(),
     HttpClientModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

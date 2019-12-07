@@ -6,11 +6,12 @@
 
     <div class="panel-body">
         <div class="container">
-            <span style="width:20%">Search User:  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Enter FirstName or LastName" /></span>
-            <br>
-            <span><button class="btn btn-primary" (click)="getAllUsers('firstName')">First Name</button> </span> &nbsp;
-            <span><button class="btn btn-primary" (click)="getAllUsers('lastName')">Last Name</button> </span>  &nbsp;
-            <span><button class="btn btn-primary" (click)="getAllUsers('employeeId')">Employee Id</button> </span>
+            <div>
+                 Search User: <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Enter FirstName or LastName"  style="width: 50% "/>
+                <button class="btn btn-primary" (click)="getAllUsers('firstName')">First Name</button>  &nbsp;
+                <button class="btn btn-primary" (click)="getAllUsers('lastName')">Last Name</button>  &nbsp;
+                <button class="btn btn-primary" (click)="getAllUsers('employeeId')">Employee Id</button>
+            </div>
         </div>
     </div>
 

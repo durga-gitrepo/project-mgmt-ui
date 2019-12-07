@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from "@angular/router";
 import { HttpClientService, User } from '../../service/http-client.service';
-import {Observable, throwError} from 'rxjs';
+import { Observable, throwError} from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 @Component({
