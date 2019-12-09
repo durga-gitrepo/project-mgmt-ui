@@ -60,6 +60,49 @@ export class Project {
       this.projectId = projectId;
     }
   }
+  
+
+  export class Task { 
+      public taskId:number;
+      public taskName:string;
+      public isParentTask:string;
+      public parentTaskId:number;
+      public projectId:number;
+      public startDate:string;
+      public endDate:string;
+      public priority: string;
+      public status:string;
+      public userName:string;
+
+      constructor(
+        taskId:number,
+        taskName:string,
+        isParentTask:string,
+        parentTaskId:number,
+        projectId:number,
+        startDate:string,
+        endDate:string,
+        priority: string,
+        status:string,
+        userName:string
+      ) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.isParentTask = isParentTask;
+        this.parentTaskId = parentTaskId;
+        this.projectId = projectId;
+        this.startDate = startDate;
+        this.endDate = endDate,
+        this.priority = priority;
+        this.status = status;
+        this.userName = userName;
+      }
+    
+      setTaskId(taskId:number)
+      {
+        this.taskId = taskId;
+      }
+  }
 
 export class AddUser{
   constructor(
@@ -69,6 +112,48 @@ export class AddUser{
   ) {}
 }
 
+export class TaskResult { 
+  public taskId:number;
+  public taskName:string;
+  public parentTaskName:string;
+  public projectName:string;
+  public priority:number;
+  public startDate:string;
+  public endDate:string;
+  public status:string;
+  public userName:string;
+  public isParentTask:string;
+
+  constructor(
+    taskId:number,
+    taskName:string,
+    parentTaskName:string,
+    projectName:string,
+    priority: number,
+    startDate:string,
+    endDate:string,
+    status:string,
+    userName:string,
+    isParentTask:string
+  ) {
+    this.taskId = taskId;
+    this.taskName = taskName;
+    this.parentTaskName = parentTaskName;
+    this.projectName = projectName;
+    this.priority = priority;
+    this.startDate = startDate;
+    this.endDate = endDate,
+    this.status = status;
+    this.userName = userName;
+    this.isParentTask = isParentTask;
+  }
+
+  setTaskId(taskId:number)
+  {
+    this.taskId = taskId;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -76,6 +161,7 @@ export class HttpClientService {
 
   editeduserId : BehaviorSubject<number>;
   editedProjectId : BehaviorSubject<number>;
+  editedTaskId : BehaviorSubject<number>;
 
   constructor(private httpClient : HttpClient) {
     this.editeduserId = new BehaviorSubject(0);
@@ -128,6 +214,11 @@ export class HttpClientService {
     this.editedProjectId = new BehaviorSubject(projectId)
   }
 
+  passTaskId(taskId : number)
+  {
+    this.editedTaskId = new BehaviorSubject(taskId)
+  }
+
   getAllProjects(sortBy : String): Observable<Project[]> 
   {
     var sortKey:String = sortBy
@@ -162,5 +253,61 @@ export class HttpClientService {
   updateProject(updatedProject : Project, projectId : number)
   {
     return this.httpClient.put<Project>("http://localhost:7050/project/project/update" + "/" + projectId, updatedProject);
+  }
+
+  getAllTasks(sortBy : String): Observable<TaskResult[]> 
+  {
+    var sortKey:String = sortBy
+    let url = "http://localhost:7050/project/task/dashboard";
+    if (sortKey = '')
+    {
+      return this.httpClient.get<TaskResult[]>(url);
+    }
+    else 
+    {
+      let sortedUrl = url + "?sortBy=" + sortBy;
+      return this.httpClient.get<TaskResult[]>(sortedUrl);
+    }
+  }
+
+  getAllTasksForSelectProject(projectId : number, sortBy : String): Observable<TaskResult[]> 
+  {
+    var sortKey:String = sortBy
+    let url = "http://localhost:7050/project/task/projectDashboard" + "/" + projectId;
+    if (sortKey = '')
+    {
+      return this.httpClient.get<TaskResult[]>(url);
+    }
+    else 
+    {
+      let sortedUrl = url + "?sortBy=" + sortBy;
+      return this.httpClient.get<TaskResult[]>(sortedUrl);
+    }
+  }  
+
+  getAllParentTasks(): Observable<Task[]> 
+  {
+      return this.httpClient.get<Task[]>("http://localhost:7050/project/task/getAllParentTasks");  
+  }
+
+  getTaskById(taskId : number)
+  {
+    return this.httpClient.get<Task>("http://localhost:7050/project/task" + "/" + taskId);
+  }
+
+  addTask(newTask: Task)
+  {
+    newTask.taskId = null;
+    return this.httpClient.post<Task>("http://localhost:7050/project/task/create", newTask);
+  }
+
+  endTask(taskId : number)
+  {
+    return this.httpClient.delete<Task>("http://localhost:7050/project/task/endTask" + "/"+ taskId);
+  }
+
+  updateTask(updateTask : Task, taskId : number)
+  {
+    return this.httpClient.put<Task>("http://localhost:7050/project/task/update" + "/" + taskId, updateTask);
   }
 }

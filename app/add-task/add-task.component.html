@@ -1,0 +1,81 @@
+<div style="width: 80%; align-content: center">
+<form id="taskForm"  [formGroup]="taskForm" (ngSubmit)="addEditTask(taskForm.value)" class="form-horizontal">     
+    <div class="panel panel-primary">
+        <div class="panel panel-heading">
+            <h3 class="panel-title">Task Information</h3>
+        </div>
+
+        <div id="AddTaskSection" class="panel-body">
+            <div id="formKey">
+                <input type="hidden" id="taskId" name="taskId"/>
+            </div>
+            <div id="status">
+                <input type="hidden" id="status" name="status"/>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.taskName}">
+                <label for="taskName" class="col-sm2 control-label">Task Name: </label>
+                <input class="form-control" formControlName="taskName" [(ngModel)]="task.taskName" name="taskName" id="taskName" (blur)="validateFormFields()"/>
+                <span class="help-block" *ngIf="formErrors.taskName">{{formErrors.taskName}}</span> 
+            </div>
+            <br>
+
+            <div id="enableParentCheckbox">
+                <input type="checkbox" [(ngModel)]="task.isParentTask"  formControlName="isParentTask" name="isParentTask" #isParentTask (change)=isParentTaskSelected()/> Parent Task
+            </div>
+            <br>
+
+            <div class="form-group" >
+                <label for="parentTaskId" class="col-sm2 control-label">Parent Task: </label>
+                <select class="form-control" formControlName="parentTaskId" [(ngModel)]="task.parentTaskId" name="parentTaskId" id="parentTaskId" (ngModelChange)='onTaskSelected($event)'>
+                    <option *ngFor = "let task of allParentTasks" [value]="task.taskId"> 
+                            {{task.taskName}}
+                    </option>
+                </select>
+            </div>
+            <br>
+
+            <div class="form-group" >
+                <label for="projectId" class="col-sm2 control-label">Project: </label>
+                <select class="form-control" formControlName="projectId" [(ngModel)]="task.projectId" name="projectId" id="projectId" (ngModelChange)='onProjectSelected($event)'>
+                    <option *ngFor = "let project of allProjects" [value]="project.projectId"> 
+                            {{project.projectName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="priority" class="col-sm2 control-label">Priority: </label>
+                <input type="range" min="0" max="100" step="5" value="50" class="form-control" formControlName="priority" [(ngModel)]="task.priority" name="priority" id="priority"/>
+            </div>
+            <br>
+
+            <div>
+                <div class="form-group" [ngClass]="{'has-error' : formErrors.startDate || formErrors.endDate}" >
+                    <label for="startDate" class="checkbox-inline">Start Date: 
+                        <input type="date" class="form-control" formControlName="startDate" [(ngModel)]="task.startDate" name="startDate" id="startDate"  (change)="validateFormFields()"/> </label>
+                    <label for="endDate" class="checkbox-inline">End Date:
+                        <input  type="date" class="form-control" formControlName="endDate" [(ngModel)]="task.endDate" name="endDate" id="endDate"  (change)="validateFormFields()"/> </label>
+                    <span class="help-block" *ngIf="formErrors.startDate">{{formErrors.startDate}}</span> 
+                    <span class="help-block" *ngIf="formErrors.endDate">{{formErrors.endDate}}</span> 
+                </div>
+            </div>
+            <br>
+                  
+            <div class="form-group" >
+                <label for="userName" class="col-sm2 control-label">User: </label>
+                <select class="form-control" formControlName="userName" [(ngModel)]="task.userName" name="userName" id="userName" (ngModelChange)='onUserSelected($event)'>
+                    <option *ngFor = "let user of allUsers" [value]="user.fullName"> 
+                            {{user.fullName}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="panel-footer">
+                <button type="submit" class="btn btn-primary" id="addEditTaskBtn" #addEditButtonName [disabled]="taskForm.invalid"></button> &nbsp;
+                <button type="button" class="btn btn-primary" (click)="cancel()">Reset</button> &nbsp;
+        </div>
+    </div>
+</form>
+</div>
