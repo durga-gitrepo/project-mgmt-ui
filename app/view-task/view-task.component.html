@@ -1,0 +1,55 @@
+<div style="width: 80%; align-content: center">
+<div class="panel panel-primary">
+   
+    <form id="searchTaskForm"  [formGroup]="searchTaskForm" (ngSubmit)="searchTask(searchTaskForm.value)" class="form-horizontal">     
+        <div class="panel-body">
+            <div class="container">
+                <div class="form-group" >
+                    <label for="projectId" class="col-sm5 control-label">Select Project: </label>
+                    <select class="form-control" formControlName="projectId" name="projectId" [(ngModel)]="projectId" name="projectId"  id="projectId" (ngModelChange)='onProjectSelected($event)' style="width: 60%">
+                        <option *ngFor = "let project of allProjects" [value]="project.projectId"> 
+                                {{project.projectName}}
+                        </option>
+                    </select> &nbsp; <button class="btn btn-primary" (click)="searchTask('')">Search Task</button> 
+                </div>    
+                <br>
+               
+            </div>
+        </div>
+
+    </form>
+    
+        <div class="panel-body">
+        <table  class="table table-striped">
+            <thead></thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Parent Task Name</th>
+                <th>Project Name</th>
+                <th>Priority</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <tbody>
+                <tr *ngFor="let taskResult of allTaskResults | filter:searchText ">
+                    <td>{{taskResult.taskName}}</td>
+                    <td>{{taskResult.parentTaskName}}</td>
+                    <td>{{taskResult.projectName}}</td>
+                    <td>{{taskResult.priority}}</td>
+                    <td>{{taskResult.startDate}}</td>
+                    <td>{{taskResult.endDate}}</td>
+                    <td>{{taskResult.userName}}</td>
+                    <td>{{taskResult.status}}</td>         
+                    <td><button class="btn btn-primary" [disabled]="taskResult.status == 'Completed' || taskResult.parentTaskName == null" (click)="editTask(taskResult.taskId)"> Edit </button></td>
+                    <td><button class="btn btn-primary" [disabled]="taskResult.status == 'Completed'" (click)="endTask(taskResult.taskId)"> End Task </button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+
+<form id="userForm"  [formGroup]="userForm" (ngSubmit)="addEditUser(userForm.value)" class="form-horizontal">     
+    <div class="panel panel-primary">
+        <div class="panel panel-heading">
+            <h3 class="panel-title">User Information</h3>
+        </div>
+
+        <div id="AddUserSection" class="panel-body" >
+            <div id="formKey">
+                <input type="hidden" id="userId" name="userId">
+            </div>
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.firstName}">
+                <label for="firstName" class="col-sm2 control-label">FirstName: </label>
+                <input class="form-control" formControlName="firstName" [(ngModel)]="user.firstName" name="firstName" id="firstName" (blur)="validateFormFields()">
+                <span class="help-block" *ngIf="formErrors.firstName">{{formErrors.firstName}}</span> 
+            </div>
+            <br>
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.lastName}">
+                <label for="lastName" class="col-sm2  control-label">LastName: </label>
+                <input class="form-control" formControlName="lastName" [(ngModel)]="user.lastName" name="lastName" id="lastName" (blur)="validateFormFields()">
+                <span class="help-block" *ngIf="formErrors.lastName">{{formErrors.lastName}}</span> 
+            </div>
+            <br>
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.employeeId}">
+                <label for="employeeId" class="col-sm2 control-label">EmployeeId: </label>
+                <input class="form-control" formControlName="employeeId" [(ngModel)]="user.employeeId" name="employeeId" id="employeeId" (blur)="validateFormFields()">
+                <span class="help-block" *ngIf="formErrors.employeeId">{{formErrors.employeeId}}</span> 
+            </div>
+            <br>
+        </div>
+
+        <div class="panel-footer">
+                <button type="submit" class="btn btn-primary" id="addEditUserBtn" #addEditButtonName [disabled]="userForm.invalid"></button> &nbsp;
+                <button type="button" class="btn btn-primary" (click)="cancel()">Reset</button> &nbsp;
+        </div>
+    </div>
+</form>

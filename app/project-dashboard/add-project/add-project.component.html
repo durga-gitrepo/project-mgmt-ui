@@ -1,0 +1,51 @@
+
+<form id="projectForm"  [formGroup]="projectForm" (ngSubmit)="addEditProject(projectForm.value)" class="form-horizontal">     
+    <div class="panel panel-primary">
+        <div class="panel panel-heading">
+            <h3 class="panel-title">Project Information</h3>
+        </div>
+
+        <div id="AddProjectSection" class="panel-body" >
+            <div id="formKey">
+                <input type="hidden" id="projectId" name="projectId"/>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.projectName}">
+                <label for="projectName" class="col-sm2 control-label">Project Name: </label>
+                <input class="form-control" formControlName="projectName" [(ngModel)]="project.projectName" name="projectName" id="projectName" (blur)="validateFormFields()"/>
+                <span class="help-block" *ngIf="formErrors.projectName">{{formErrors.projectName}}</span> 
+            </div>
+            <br>
+            <div>
+                <div class="form-group" [ngClass]="{'has-error' : formErrors.startDate || formErrors.endDate}" >
+                    <input type="checkbox" formControlName="isDefaultDate" name="isDefaultDate" #isDefaultDate (change)=isDefaultDateSelected()/> Set Default Date
+                    <label for="startDate" class="checkbox-inline">Start Date: 
+                        <input type="date" class="form-control" formControlName="startDate" [(ngModel)]="project.startDate" name="startDate" id="startDate"  (change)="validateFormFields()"/> </label>
+                    <label for="endDate" class="checkbox-inline">End Date:
+                        <input  type="date" class="form-control" formControlName="endDate" [(ngModel)]="project.endDate" name="endDate" id="endDate"  (change)="validateFormFields()"/> </label>
+                    <span class="help-block" *ngIf="formErrors.startDate">{{formErrors.startDate}}</span> 
+                    <span class="help-block" *ngIf="formErrors.endDate">{{formErrors.endDate}}</span> 
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="priority" class="col-sm2 control-label">Priority: </label>
+                <input type="range" min="0" max="100" step="5" value="50" class="form-control" formControlName="priority" [(ngModel)]="project.priority" name="priority" id="priority"/>
+            </div>
+            <br>
+       
+            <div class="form-group" >
+                    <label for="managerName" class="col-sm2 control-label">Manager Name: </label>
+                    <select class="form-control" formControlName="managerName" [(ngModel)]="project.managerName" name="managerName" id="managerName" (ngModelChange)='onManagerSelected($event)'>
+                        <option *ngFor = "let user of allUsers" [value]="user.fullName"> 
+                                {{user.fullName}}
+                        </option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+                <button type="submit" class="btn btn-primary" id="addEditProjectBtn" #addEditButtonName [disabled]="projectForm.invalid"></button> &nbsp;
+                <button type="button" class="btn btn-primary" (click)="cancel()">Reset</button> &nbsp;
+        </div>
+    </div>
+</form>
